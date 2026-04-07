@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mypylib"
+requires-python = ">=3.10"
+version = "1.1.0"
+dependencies = [
+    "psutil==7.0.0",
+    "requests>=2.31.0",
+    "types-psutil",
+    "types-requests",
+]
+
+[tool.setuptools.packages.find]
+include = ["mypylib", "mypylib.*"]
+
+[tool.setuptools.package-data]
+mypylib = ["py.typed"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    # pydocstyle
+    "D",
+    # pycodestyle
+    "E",
+    "W",
+    # pyflakes
+    "F",
+    # isort
+    "I",
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pyupgrade
+    "UP",
+    # flake8-simplify
+    "SIM",
+    # type-checking imports
+    "TCH",
+    # perflint
+    "PERF",
+    # flake8-debugger
+    "T10",
+    # flake8-print
+    "T20",
+    # flake8-pie
+    "PIE",
+    # pylint errors
+    "PLE",
+    # flake8-return
+    "RET",
+    # ruff-specific
+    "RUF",
+    # flake8-bandit (security)
+    "S",
+]
+ignore = [
+    # no module-level docstrings
+    "D100",
+    # blank line before class docstring (conflicts D211)
+    "D203",
+    # multi-line summary second line (conflicts D212)
+    "D213",
+    # print (library intentionally uses print)
+    "T201",
+    # subprocess with untrusted input (library intentionally calls system commands)
+    "S603",
+    # os.system shell injection (library intentionally uses shell commands)
+    "S605",
+    # subprocess without full path (paths differ across OS)
+    "S607",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "D104"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["mypylib"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+pretty = true
+show_error_codes = true
+show_error_context = true
+namespace_packages = true
+follow_imports_for_stubs = true
+warn_unreachable = true
+enable_error_code = [
+    "ignore-without-code",
+    "redundant-cast",
+    "truthy-bool",
+]
