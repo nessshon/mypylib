@@ -1034,6 +1034,8 @@ def add2systemd(**kwargs):
 	user = kwargs.get("user", "root")
 	group = kwargs.get("group", user)
 	workdir = kwargs.get("workdir")
+	after = kwargs.get("after", "network.target")
+	wants = kwargs.get("wants")
 	force = kwargs.get("force")
 	pversion = platform.version()
 	psys = platform.system()
@@ -1054,7 +1056,8 @@ def add2systemd(**kwargs):
 	text = f"""
 [Unit]
 Description = {name} service. Created by https://github.com/igroman787/mypylib.
-After = network.target
+After = {after}
+{f"Wants = {wants}" if wants else '# Wants not set'}
 
 [Service]
 Type = simple
